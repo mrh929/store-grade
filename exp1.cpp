@@ -292,6 +292,13 @@ int main(){
 				Print_Grade();
 				break;
 			}
+			
+			case 7:{
+				
+				
+				
+				break;
+			}
 		}
 		
 	}
