@@ -244,6 +244,23 @@ void Write_Grade(){
 	return;
 }
 
+
+void ReverseStudent(){
+	Student *head = (Student*) malloc(sizeof(Student));
+	Student *p = StudentList->next;
+	head->next = NULL;
+	
+	while(p != NULL){
+		Student *t = p->next;//暂时保存p的下一个结点 
+		
+		p->next = head->next;
+		head->next = p;
+		p = t;
+	}
+	
+	StudentList = head;
+}
+
 int main(){
 	int opt;
 	Student *HEAD = NULL;
@@ -294,9 +311,18 @@ int main(){
 			}
 			
 			case 7:{
+				StudentList = Read_Student();
+				CourseList = Read_Course();
+				GradeList = Read_Grade();
 				
 				
 				
+				break;
+			}
+			
+			case 10:{
+				ReverseStudent();//逆序生成新的链表 
+				Print_Student();//输出该链表 
 				break;
 			}
 		}
