@@ -24,6 +24,12 @@ struct Grade{
     Grade *next;
 }*GradeList;
 
+struct allinfo{
+	
+	
+	
+};
+
 FILE *Open_File(int who, int rw){//打开哪个文件，打开方式如何 
 	FILE *p;
 	switch(who){
@@ -210,8 +216,6 @@ void BubbleSort_Grade(){
 				p->next = pnext->next;
 				pnext->next = p;	
 			}
-			
-			
 			pre = p;
 			p = p->next;
 		}
@@ -244,6 +248,100 @@ void Write_Grade(){
 	return;
 }
 
+void BubbleSort_StudentsGrade(){
+	for(int i = 1; i <= 10; i++){
+		Grade *p = GradeList->next;
+		Grade *pre = GradeList;
+		while(p != NULL && p->next != NULL ){//存在两个可以比较的结点 
+			Grade *pnext = p->next;
+			if(p->score < pnext->score){
+				pre->next = pnext;
+				p->next = pnext->next;
+				pnext->next = p;	
+			}
+			pre = p;
+			p = p->next;
+		}
+	}
+}
+
+Student *Find_Student(char *num){
+	Student *p = StudentList->next;
+	do{
+		if(strcmp(p->sno, num) == 0) return p;
+		p = p->next;
+	}while(p != NULL);
+	
+	p = (Student*) malloc(sizeof(Student));
+	char temp[3] = "-1";
+	strcpy(p->major, temp);
+	strcpy(p->sex, temp);
+	strcpy(p->sname, temp);
+	strcpy(p->sno, temp);
+	p->next = NULL;
+	return p;//返回错误 
+}
+
+Course *Find_Course(char *num){
+	Course *p = CourseList->next;
+	do{
+		if(strcmp(p->cno, num) == 0) return p;
+		p = p->next;
+	}while(p != NULL);
+	
+	p = (Course*) malloc(sizeof(Course));
+	char temp[3] = "-1";
+	strcpy(p->cname, temp);
+	strcpy(p->cno, temp);
+	p->classHours = -1;
+	p->next = NULL;
+	return p;//返回错误 
+}
+
+void Print_All(Grade *p){
+	Student *s = Find_Student(p->sno);
+	Course *c = Find_Course(p->cno);
+	printf("%6s %6s %6s %6s %3d", s->sno, s->sname, s->major, c->cname, p->score);
+}
+
+void Print_Seven(){//Task7 
+	Grade *p = GradeList->next;
+	printf("\nGradeList");
+	printf("\nnumber   name  major  course  grade");
+	printf("\n---------------------------------------\n");
+	while(p != NULL){
+		Print_All(p);
+		p = p->next;
+		if(p != NULL) printf("\n");
+	}
+	printf("\n---------------------------------------\n\n");
+}
+
+void Print_Eight(char* num){//Task8 指定课程号 
+	Grade *p = GradeList->next;
+	printf("\nGradeList");
+	printf("\nnumber   name  major  course  grade");
+	printf("\n---------------------------------------\n");
+	while(p != NULL){
+		if(strcmp(p->cno, num) == 0) Print_All(p);
+		p = p->next;
+		if(p != NULL) printf("\n");
+	}
+	printf("\n---------------------------------------\n\n");
+}
+
+void Print_Nine(){//Task9 
+	Grade *p = GradeList->next;
+	printf("\nGradeList");
+	printf("\nnumber   name  major  course  grade");
+	printf("\n---------------------------------------\n");
+	while(p != NULL){
+		if(p->score < 60) Print_All(p);
+		p = p->next;
+		if(p != NULL) printf("\n");
+	}
+	printf("\n---------------------------------------\n\n");
+}
 
 void ReverseStudent(){
 	Student *head = (Student*) malloc(sizeof(Student));
@@ -314,15 +412,46 @@ int main(){
 				StudentList = Read_Student();
 				CourseList = Read_Course();
 				GradeList = Read_Grade();
+				BubbleSort_StudentsGrade();//按照成绩排序 
+				Print_Seven();
 				
+				break;
+			}
+			
+			case 8:{
+				StudentList = Read_Student();
+				CourseList = Read_Course();
+				GradeList = Read_Grade();
+				BubbleSort_StudentsGrade();//按照成绩排序 
+				char str[10];
+				printf("input course name:");
+				scanf("%s", str);
+				Print_Eight(str);
 				
+				break;
+			}
+			
+			case 9:{
+				StudentList = Read_Student();
+				CourseList = Read_Course();
+				GradeList = Read_Grade();
+				BubbleSort_StudentsGrade();//按照成绩排序 
+				Print_Nine();
 				
 				break;
 			}
 			
 			case 10:{
+				StudentList = Read_Student();
 				ReverseStudent();//逆序生成新的链表 
 				Print_Student();//输出该链表 
+				break;
+			}
+			
+			case 11:{
+				
+				
+				
 				break;
 			}
 		}
