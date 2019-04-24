@@ -350,7 +350,6 @@ void ReverseStudent(){
 	
 	while(p != NULL){
 		Student *t = p->next;//暂时保存p的下一个结点 
-		
 		p->next = head->next;
 		head->next = p;
 		p = t;
@@ -363,6 +362,17 @@ int main(){
 	int opt;
 	Student *HEAD = NULL;
 	printf("Welcome to Students' score system!\n");
+	printf("1.Input students.\n");
+	printf("2.Input courses.\n");
+	printf("3.Input grades.\n");
+	printf("4.Output students.\n");
+	printf("5.Output courses.\n");
+	printf("6.Output grades.\n");
+	printf("7.Output all.\n");
+	printf("8.Output all of a course.\n");
+	printf("9.Output all below 60.\n");
+	printf("10.Reverse students.\n");
+	printf("11.Output all.\n");
 	
 	while(1){
 		printf("\nPlease input an option:");	
@@ -449,7 +459,11 @@ int main(){
 			}
 			
 			case 11:{
-				
+				StudentList = Read_Student();
+				CourseList = Read_Course();
+				GradeList = Read_Grade();
+				BubbleSort_StudentsGrade();//按照成绩排序 
+				Print_Seven();
 				
 				
 				break;
